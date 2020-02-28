@@ -1,0 +1,65 @@
+.header
+{
+    font-size: 300px;
+    margin-top: 50;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    text-align: center; 
+} 
+
+body {
+    font-family: sans-serif;
+    background-size: cover;
+    background-image: url(images/rajp.jpg);
+}
+
+.logo
+{
+height: 200px;
+padding: 2px;
+
+margin-left: 80;
+margin-top: 10px;
+
+}
+
+h1
+{
+    font-size: 100px;
+    margin-top: 50;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    color: black !important;
+    text-align: center;
+    padding:30px;
+    
+
+}
+
+h1
+{
+    font-size: 200px;
+    margin: 10px;
+    text-align: center;
+    padding:15px;
+    color: black !important;
+
+}
+
+a.btn{
+    margin: 30px 10px;
+    width: 150 px;
+    padding: 10 px;
+    border-radius: 20px;
+    text-align: center;
+}
+div{
+    text-align: center;
+}
+
+a.btn-first{
+    font-size:30px;
+    background-color: lavenderblush;
+    color: black;
+    text-align: center;
+}
