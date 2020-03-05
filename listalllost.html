@@ -1,32 +1,58 @@
 <html>
-    <title>
-        Lost Items
-    </title>
+  <head>
+    <title>Lost Items</title>
+    <style>
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+      }
+      .inner-card {
+        padding: 2px 16px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        text-align: center;
+      }
+    </style>
+  </head>
     
-    <body>
-        <h1 style="text-align: center;font-size: larger;">
-            List of all Lost Items
-        </h1>
-        <button class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-        transition: 0.3s;">
-            <div  style="padding: 2px 16px; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);text-align: center;">
-               <p> B170927EE</p>
-               <p> Jayanth</p>
-                <p>Camera</p>
-                <p>DSLR</p>
-                <p>9961133071</p>
-          </div>
-            
-          </button>
+  <body>
+    <h1 style="text-align: center;font-size: larger;">List of all Lost Items</h1>
+    <div id="items">
+    </div>
 
-          <script>
-              window.onload() = function () {
-                  fetch('http://sdfsdf.com/found')
-                    .then(response => response.json())
-                    .then((result) => {
-                        let 
-                    })
-              }
-          </script>
-    </body>
+    <script>
+      let container = document.getElementById("items");
+
+      function newElem(type, text, className, parent) {
+        el = document.createElement(type);
+        el.textContent = text;
+        (className != "") && el.classList.add(className);
+        parent.appendChild(el);
+        return el;
+      }
+
+      fetch("http://localhost:5000/viewalllost").then(res => res.json()).then(data => {
+        if (data.length < 1) {
+          container.textContent = "No items lost :)";
+        } else {
+          data.reverse();
+          data.forEach(d => {
+            let con = newElem("BUTTON", "", "card", container);
+            let inner = newElem("DIV", "", "inner-card", con);
+
+            newElem("P", d.name, "", inner); 
+            newElem("P", d.rno, "", inner); 
+            newElem("P", d.item, "", inner); 
+            newElem("P", d.desc, "", inner); 
+            newElem("P", d.place, "", inner); 
+            newElem("P", d.contact, "", inner); 
+            newElem("P", d.time, "", inner); 
+          })
+        }
+        console.log(data);
+      }).catch(err => {
+        alert("Error in fetching data");
+        console.error(err);
+      });
+    </script>
+  </body>
 </html>

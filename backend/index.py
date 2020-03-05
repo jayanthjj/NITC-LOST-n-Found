@@ -1,11 +1,13 @@
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy, update
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://jayanth:jarvis@localhost/lostnfound'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://username:password@localhost/lostnfound'
 db = SQLAlchemy(app)
 
 @app.route('/')
@@ -36,7 +38,7 @@ class Found(db.Model):
 @app.route('/lost', methods=['POST'])
 def index():
     data = request.get_json()
-    lostItem = User(rno = data["rno"], name= data["name"], item=data["item"], place=data["place"], desc=data["desc"], numb=data["numb"])
+    lostItem = User(rno = data["rno"], name= data["name"], item=data["item"], place=data["place"], desc=data["desc"], numb=data["numb"], time=datetime.now())
     db.session.add(lostItem)
     db.session.commit()
     return "Post request issa set"
@@ -44,7 +46,7 @@ def index():
 @app.route('/find', methods=['POST'])
 def index2():
     data = request.get_json()
-    lostItem = Found(rno = data["rno"], name= data["name"], item=data["item"], place=data["place"], desc=data["desc"], numb=data["numb"])
+    lostItem = Found(rno = data["rno"], name= data["name"], item=data["item"], place=data["place"], desc=data["desc"], numb=data["numb"], time=datetime.now())
     db.session.add(lostItem)
     db.session.commit()
     return "FIND request issa set"
@@ -63,7 +65,6 @@ def index3():
         temp["place"] = dataEach.place
         temp["desc"] = dataEach.desc
         temp["numb"] = dataEach.numb
-        temp["status"] = dataEach.status
         retVal.append(temp)
     return jsonify(retVal)
 
@@ -102,4 +103,4 @@ def index4():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host = "0.0.0.0")

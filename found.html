@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="qfc-dark.css">
+  <!-- <link rel="stylesheet" href="qfc-light.css"> -->
+</head>
+
+<body>
+  <div class="qfc-container">
+    <h2>FOUND</h2>
+    <hr />
+    <label>Kindly fill in the following details</label>
+    <form id="find-item">
+      <!-- <div>
+        <div class="form"><span>Upload Photo      : </span><input type="file" name="Photo" /></div>
+        <button style="text-align: center;">Upload</button>
+      </div> -->
+      <div class="form"><span>Roll No.   : </span><input type="text" id="rollno" name="Roll No." placeholder=" Your Roll No." required /></div>
+      <div class="form"><span>Name       : </span><input type="text" id="name" name="Name" placeholder=" Your Name" required /></div>
+      <div class="form"><span>Item       : </span><input type="text" id="item" name="Item" placeholder=" Lost Item" required /></div>
+      <div class="form"><span>Place      : </span><input type="text" id="place" name="Place" placeholder=" Place where it was lost" required /></div>
+      <div class="form"><span>Description: </span><input type="text" id="description" name="Description" placeholder=" Write something" required /></div>
+      <div class="form"><span>Contact No.: </span><input type="text" id="contact" name="Contact No." placeholder="Your contact no. " required /></div>
+      <div class="form"><button type="submit">Submit</button></div>
+    </form>
+  </div><!--end container-->      
+  
+  <script>
+    let lostForm = document.getElementById("find-item");
+    lostForm.addEventListener("submit", e => {
+      e.preventDefault();
+      let data = {
+        rno: document.getElementById("rollno").value,
+        name: document.getElementById("name").value,
+        item: document.getElementById("item").value,
+        place: document.getElementById("place").value,
+        desc: document.getElementById("description").value,
+        numb: document.getElementById("contact").value,
+      };
+      fetch("http://localhost:5000/find", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then(res => res.text()).then(re => {
+        console.log(re);
+        if (re == "FIND request issa set") {
+          alert("Item was succesfully entered");
+          window.location = "./listallfound.html";
+        } else {
+          alert("Error in sending data");
+        }
+      }).catch(err => {
+        alert("Error in sending data");
+        console.log(err);
+      });
+    });
+  </script>
+</html>
